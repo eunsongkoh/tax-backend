@@ -9,12 +9,16 @@ public class User {
     @Id
     private int id;
     private String username;
+    private String password;
     private String email;
 
-    public User(){}
-    public User(int _id, String _username, String _email) {
+    public User() {
+    }
+
+    public User(int _id, String _username, String _password, String _email) {
         this.id = _id;
         this.username = _username;
+        this.password = _password;
         this.email = _email;
     }
 
@@ -26,7 +30,15 @@ public class User {
         this.username = newUsername;
     }
 
-    public String getEmail(){
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public String getEmail() {
         return email;
     }
 
@@ -43,20 +55,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(email, user.email);
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email);
-    }
-
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return Objects.hash(id, username, password, email);
     }
 }
+ 
