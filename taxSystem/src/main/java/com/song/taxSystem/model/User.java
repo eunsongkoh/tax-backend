@@ -7,47 +7,47 @@ import java.util.Objects;
 @Table("users")
 public class User {
     @Id
-    private int id;
-    private String username;
-    private String password;
-    private String email;
+    private int UserID;
+    private String UserName;
+    private String Email;
+    private String PasswordHash;
 
     public User() {
     }
 
-    public User(int _id, String _username, String _password, String _email) {
-        this.id = _id;
-        this.username = _username;
-        this.password = _password;
-        this.email = _email;
+    public User(int _userID, String _username, String _email, String _hashedPassword) {
+        this.UserID = _userID;
+        this.UserName = _username;
+        this.Email = _email;
+        this.PasswordHash = _hashedPassword;
     }
 
     public String getUsername() {
-        return username;
+        return UserName;
     }
 
     public void setUsername(String newUsername) {
-        this.username = newUsername;
+        this.UserName = newUsername;
     }
 
     public String getPassword() {
-        return password;
+        return PasswordHash;
     }
 
     public void setPassword(String newPassword) {
-        this.password = newPassword;
+        this.PasswordHash = newPassword;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String newEmail) {
-        this.email = newEmail;
+        this.Email = newEmail;
     }
 
     public int getId() {
-        return id;
+        return UserID;
     }
 
     @Override
@@ -55,12 +55,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
+        return UserID == user.UserID && Objects.equals(UserName, user.UserName) && Objects.equals(PasswordHash, user.PasswordHash) && Objects.equals(Email, user.Email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email);
+        return Objects.hash(UserID, UserName, PasswordHash, Email);
     }
 }
  

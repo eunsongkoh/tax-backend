@@ -23,21 +23,21 @@ public class UserController {
     }
 
     @GetMapping(value = "/profile")
-    public User getUserById(@RequestBody int id){
-        return userRepository.findById(id).orElse(null);
+    public User getUserById(@RequestBody int userId){
+        return userRepository.findById(userId).orElse(null);
     }
 
     @DeleteMapping()
-    public ResponseEntity<String> deleteUserById(@RequestBody int id){
-        userRepository.deleteById(id);
-        return ResponseEntity.ok("User {"+id+"} was deleted successfully");
+    public ResponseEntity<String> deleteUserById(@RequestBody int userId){
+        userRepository.deleteById(userId);
+        return ResponseEntity.ok("User {"+userId+"} was deleted successfully");
     }
 
     @PutMapping()
-    public User editUser(@RequestBody int id, @RequestBody User user){
-        User existingUser = userRepository.findById(id).orElse(null);
+    public User editUser(@RequestBody int userId, @RequestBody User user){
+        User existingUser = userRepository.findById(userId).orElse(null);
         if(existingUser == null){
-            throw new RuntimeException("User {"+id+"} not found");
+            throw new RuntimeException("User {"+userId+"} not found");
         }
         existingUser.setUsername(user.getUsername());
         existingUser.setEmail(user.getEmail());
