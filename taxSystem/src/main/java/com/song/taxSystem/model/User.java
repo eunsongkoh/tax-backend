@@ -1,53 +1,61 @@
 package com.song.taxSystem.model;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Objects;
 
-@Table("users")
+@Table("Users")
 public class User {
     @Id
-    private int UserID;
-    private String UserName;
-    private String Email;
-    private String PasswordHash;
+    @Column("UserID")
+    private int userId;
+
+    @Column("UserName")
+    private String userName;
+
+    @Column("Email")
+    private String email;
+
+    @Column("PasswordHash")
+    private String passwordHash;
 
     public User() {
     }
 
     public User(int _userID, String _username, String _email, String _hashedPassword) {
-        this.UserID = _userID;
-        this.UserName = _username;
-        this.Email = _email;
-        this.PasswordHash = _hashedPassword;
+        this.userId = _userID;
+        this.userName = _username;
+        this.email = _email;
+        this.passwordHash = _hashedPassword;
     }
 
     public String getUsername() {
-        return UserName;
+        return userName;
     }
 
     public void setUsername(String newUsername) {
-        this.UserName = newUsername;
+        this.userName = newUsername;
     }
 
     public String getPassword() {
-        return PasswordHash;
+        return passwordHash;
     }
 
     public void setPassword(String newPassword) {
-        this.PasswordHash = newPassword;
-    }
-
-    public String getEmail() {
-        return Email;
+        this.passwordHash = newPassword;
     }
 
     public void setEmail(String newEmail) {
-        this.Email = newEmail;
+        this.email = newEmail;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getId() {
-        return UserID;
+        return userId;
     }
 
     @Override
@@ -55,12 +63,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return UserID == user.UserID && Objects.equals(UserName, user.UserName) && Objects.equals(PasswordHash, user.PasswordHash) && Objects.equals(Email, user.Email);
+        return userId == user.userId && Objects.equals(userName, user.userName) && Objects.equals(passwordHash, user.passwordHash) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(UserID, UserName, PasswordHash, Email);
+        return Objects.hash(userId, userName, passwordHash, email);
     }
 }
  
