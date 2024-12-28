@@ -1,7 +1,14 @@
 package com.song.taxSystem.controller;
 
+import com.song.taxSystem.model.PItem;
+import com.song.taxSystem.model.Purchase;
 import com.song.taxSystem.model.User;
+import com.song.taxSystem.repository.PItemRepository;
+import com.song.taxSystem.repository.PurchaseRepository;
 import com.song.taxSystem.repository.UserRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository; 
+
+    @Autowired
+    private PItemRepository pItemRepository; 
 
     @PostMapping
     public ResponseEntity<String> addUser(@RequestBody User newUser){
@@ -42,5 +55,17 @@ public class UserController {
         existingUser.setUsername(user.getUsername());
         existingUser.setEmail(user.getEmail());
         return userRepository.save(existingUser);
+    }
+
+    @GetMapping("/user/{userId}/purchases")
+    public ResponseEntity<List<Purchase>> getUserPurchases(@PathVariable int userId) {
+        List<Purchase> purchases = purchaseRepository.findByUserId(userId);
+
+        for (Purchase purchase : purchases) {
+            List<PItem> items = pItemRepository.findByPurchaseId(purchase.getPurchaseId());
+            purchase.setItems(items); 
+        }
+
+        return ResponseEntity.ok(purchases);
     }
 }

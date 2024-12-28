@@ -3,6 +3,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.List;
 import java.util.Objects;
 
 @Table("Users")
@@ -19,6 +20,8 @@ public class User {
 
     @Column("PasswordHash")
     private String passwordHash;
+    
+    private List<Purchase> purchases;
 
     public User() {
     }
@@ -56,6 +59,14 @@ public class User {
 
     public int getId() {
         return userId;
+    }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     @Override
