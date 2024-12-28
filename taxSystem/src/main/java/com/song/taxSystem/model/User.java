@@ -3,6 +3,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +13,8 @@ public class User {
     @Id
     @Column("UserID")
     private int userId;
-
+    
+    @JsonProperty("userName")
     @Column("UserName")
     private String userName;
 
@@ -21,13 +24,13 @@ public class User {
     @Column("PasswordHash")
     private String passwordHash;
     
+    
     private List<Purchase> purchases;
 
     public User() {
     }
 
-    public User(int _userID, String _username, String _email, String _hashedPassword) {
-        this.userId = _userID;
+    public User(String _username, String _email, String _hashedPassword) {
         this.userName = _username;
         this.email = _email;
         this.passwordHash = _hashedPassword;
@@ -41,12 +44,12 @@ public class User {
         this.userName = newUsername;
     }
 
-    public String getPassword() {
+    public String getPasswordHash() {
         return passwordHash;
     }
 
-    public void setPassword(String newPassword) {
-        this.passwordHash = newPassword;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public void setEmail(String newEmail) {
@@ -59,6 +62,10 @@ public class User {
 
     public int getId() {
         return userId;
+    }
+
+    public void setId(int userId){
+        this.userId = userId; 
     }
 
     public List<Purchase> getPurchases() {

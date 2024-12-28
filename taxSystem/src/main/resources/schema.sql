@@ -1,12 +1,12 @@
--- DROP TABLE IF EXISTS pitem;
--- DROP TABLE IF EXISTS purchases;
--- DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS PItems;
+DROP TABLE IF EXISTS Purchases;
+DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
-    userId INT IDENTITY PRIMARY KEY,             
-    username VARCHAR(20) NOT NULL UNIQUE,      
-    email VARCHAR(255) NOT NULL UNIQUE,        
-    passwordHash VARCHAR(255) NOT NULL
+    UserId INT IDENTITY PRIMARY KEY,             
+    UserName VARCHAR(20) NOT NULL UNIQUE,      
+    Email VARCHAR(255) NOT NULL UNIQUE,        
+    PasswordHash VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Purchases (

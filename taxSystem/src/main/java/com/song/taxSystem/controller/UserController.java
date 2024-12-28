@@ -7,7 +7,9 @@ import com.song.taxSystem.repository.PItemRepository;
 import com.song.taxSystem.repository.PurchaseRepository;
 import com.song.taxSystem.repository.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +26,20 @@ public class UserController {
     @Autowired
     private PItemRepository pItemRepository; 
 
-    @PostMapping
-    public ResponseEntity<String> addUser(@RequestBody User newUser){
-        User savedUser = userRepository.save(newUser);
-        return ResponseEntity.ok("User {"+savedUser.getId()+"} was created successfully");
-    }
+    @PostMapping("/signup")
+    public ResponseEntity<Map<String, Object>> addUser(@RequestBody User newUser) {
+    System.out.println("Received User: " + newUser);
+    User savedUser = userRepository.save(newUser);
 
-    @GetMapping
+    Map<String, Object> response = new HashMap<>();
+    response.put("message", "User created successfully");
+    response.put("userId", savedUser.getId()); 
+
+    return ResponseEntity.ok(response);
+}
+
+
+    @GetMapping("/users")
     public Iterable<User> getAll(){
         return userRepository.findAll();
     }
