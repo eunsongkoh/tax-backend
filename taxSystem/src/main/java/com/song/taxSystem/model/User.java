@@ -24,8 +24,7 @@ public class User {
     @Column("PasswordHash")
     private String passwordHash;
     
-    
-    private List<Purchase> purchases;
+    // private List<Purchase> purchases;
 
     public User() {
     }
@@ -68,13 +67,13 @@ public class User {
         this.userId = userId; 
     }
 
-    public List<Purchase> getPurchases() {
-        return purchases;
-    }
+    // public List<Purchase> getPurchases() {
+    //     return purchases;
+    // }
 
-    public void setPurchases(List<Purchase> purchases) {
-        this.purchases = purchases;
-    }
+    // public void setPurchases(List<Purchase> purchases) {
+    //     this.purchases = purchases;
+    // }
 
     @Override
     public boolean equals(Object o) {

@@ -12,11 +12,11 @@ public class PItem {
     @Column("ItemID")
     private int itemId;
 
-    @Column("PID")
+    @Column("Pid")
     private int purchaseId;
 
     @Column("Price")
-    private int price;
+    private double price;
 
     @Column("ItemName")
     private String itemName;
@@ -24,7 +24,7 @@ public class PItem {
     public PItem() {
     }
 
-    public PItem(int itemId, int purchaseId, int price, String itemName) {
+    public PItem(int itemId, int purchaseId, double price, String itemName) {
         this.itemId = itemId;
         this.purchaseId = purchaseId;
         this.price = price;
@@ -47,11 +47,11 @@ public class PItem {
         this.purchaseId = purchaseId;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

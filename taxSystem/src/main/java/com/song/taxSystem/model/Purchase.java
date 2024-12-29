@@ -10,10 +10,10 @@ import java.util.Objects;
 @Table("Purchases")
 public class Purchase {
     @Id
-    @Column("PID")
+    @Column("Pid")
     private int purchaseId;
 
-    @Column("UserID")
+    @Column("UserId")
     private int userId;
 
     @Column("Total")

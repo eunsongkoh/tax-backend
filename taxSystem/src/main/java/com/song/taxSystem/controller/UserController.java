@@ -3,6 +3,7 @@ package com.song.taxSystem.controller;
 import com.song.taxSystem.model.PItem;
 import com.song.taxSystem.model.Purchase;
 import com.song.taxSystem.model.User;
+import com.song.taxSystem.model.UserRequest;
 import com.song.taxSystem.repository.PItemRepository;
 import com.song.taxSystem.repository.PurchaseRepository;
 import com.song.taxSystem.repository.UserRepository;
@@ -28,20 +29,39 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> addUser(@RequestBody User newUser) {
-    System.out.println("Received User: " + newUser);
-    User savedUser = userRepository.save(newUser);
+        System.out.println("Received User: " + newUser);
+        User savedUser = userRepository.save(newUser);
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("message", "User created successfully");
-    response.put("userId", savedUser.getId()); 
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "User created successfully");
+        response.put("userId", savedUser.getId()); 
 
-    return ResponseEntity.ok(response);
-}
-
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/users")
     public Iterable<User> getAll(){
         return userRepository.findAll();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserRequest loginRequest) {
+        String userName = loginRequest.getUserName();
+        String passwordHash = loginRequest.getPasswordHash();
+        System.out.println("Received Request: " + userName + " " + passwordHash);
+
+        User user = userRepository.findByUserNameAndPasswordHash(userName, passwordHash);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (user != null) {
+            response.put("message", "User exists");
+            response.put("userId", user.getId()); 
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "Invalid username or password");
+            return ResponseEntity.status(401).body(response);
+        }
     }
 
     @GetMapping(value = "/profile")
@@ -66,15 +86,15 @@ public class UserController {
         return userRepository.save(existingUser);
     }
 
-    @GetMapping("/user/{userId}/purchases")
-    public ResponseEntity<List<Purchase>> getUserPurchases(@PathVariable int userId) {
-        List<Purchase> purchases = purchaseRepository.findByUserId(userId);
+    // @GetMapping("/user/{userId}/purchases")
+    // public ResponseEntity<List<Purchase>> getUserPurchases(@PathVariable int userId) {
+    //     List<Purchase> purchases = purchaseRepository.findByUserId(userId);
 
-        for (Purchase purchase : purchases) {
-            List<PItem> items = pItemRepository.findByPurchaseId(purchase.getPurchaseId());
-            purchase.setItems(items); 
-        }
+    //     for (Purchase purchase : purchases) {
+    //         List<PItem> items = pItemRepository.findByPurchaseId(purchase.getPurchaseId());
+    //         purchase.setItems(items); 
+    //     }
 
-        return ResponseEntity.ok(purchases);
-    }
+    //     return ResponseEntity.ok(purchases);
+    // }
 }

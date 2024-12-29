@@ -10,17 +10,17 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Purchases (
-    pid INT IDENTITY PRIMARY KEY,               
-    userId INT NOT NULL,                         
-    total DECIMAL(10, 2) NOT NULL,               
-    FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE 
+    Pid INT IDENTITY PRIMARY KEY,               
+    UserId INT NOT NULL,                         
+    Total DECIMAL(10, 2) NOT NULL,               
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE 
 );
 
 
 CREATE TABLE PItems (
-    itemid INT IDENTITY PRIMARY KEY,             
-    pid INT NOT NULL,                           
-    price DECIMAL(10, 2) NOT NULL,               
-    itemName VARCHAR(255) NOT NULL,             
-    FOREIGN KEY (pid) REFERENCES purchases(pid) ON DELETE CASCADE 
+    ItemId INT IDENTITY PRIMARY KEY,             
+    Pid INT NOT NULL,                           
+    Price DECIMAL(10, 2) NOT NULL,               
+    ItemName VARCHAR(255) NOT NULL,             
+    FOREIGN KEY (Pid) REFERENCES Purchases(Pid) ON DELETE CASCADE 
 );
