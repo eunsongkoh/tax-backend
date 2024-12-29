@@ -1,9 +1,16 @@
 package com.song.taxSystem.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.song.taxSystem.model.CheckoutRequest;
 import com.song.taxSystem.model.PItem;
@@ -12,8 +19,6 @@ import com.song.taxSystem.model.User;
 import com.song.taxSystem.repository.PItemRepository;
 import com.song.taxSystem.repository.PurchaseRepository;
 import com.song.taxSystem.repository.UserRepository;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/checkout")
@@ -30,19 +35,23 @@ public class CheckoutController {
 
     @Transactional
     @PostMapping("/")
-    public ResponseEntity<String> checkout(@RequestBody CheckoutRequest checkoutRequest) {
+    public ResponseEntity<Map<String, Object>> checkout(@RequestBody CheckoutRequest checkoutRequest) {
         User user = userRepository.findById(checkoutRequest.getUserId()).orElse(null);
+        Map<String, Object> response = new HashMap<>();
         if (user == null) {
-            return ResponseEntity.status(404).body("User not found");
+            response.put("message", "User Not Found");
+            return ResponseEntity.status(404).body(response);
         }
 
         Purchase newPurchase = new Purchase();
         newPurchase.setUserId(user.getId());
+        newPurchase.setTotal(checkoutRequest.getTotal());
         newPurchase = purchaseRepository.save(newPurchase); 
 
         List<PItem> items = checkoutRequest.getItems();
         if (items == null || items.isEmpty()) {
-            return ResponseEntity.status(400).body("No items provided");
+            response.put("message", "No Items Provided");
+            return ResponseEntity.status(400).body(response);
         }
 
         for (PItem item : items) {
@@ -51,7 +60,10 @@ public class CheckoutController {
 
         pItemRepository.saveAll(items);
 
-        return ResponseEntity.ok("Checkout successful. Purchase created with pid: " + newPurchase.getPurchaseId());
+        response.put("message", "\"Checkout successful.");
+        response.put("pid", newPurchase.getPurchaseId());
+
+        return ResponseEntity.ok(response);
     }
 
     // @PutMapping("/{userId}")

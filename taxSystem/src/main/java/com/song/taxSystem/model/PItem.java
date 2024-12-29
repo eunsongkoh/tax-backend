@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Objects;
 
-@Table("PItem")
+@Table("PItems")
 public class PItem {
     @Id
     @Column("ItemID")
@@ -21,14 +21,18 @@ public class PItem {
     @Column("ItemName")
     private String itemName;
 
+    @Column("Quantity")
+    private int quantity; 
+
     public PItem() {
     }
 
-    public PItem(int itemId, int purchaseId, double price, String itemName) {
+    public PItem(int itemId, int purchaseId, double price, String itemName, int quantity) {
         this.itemId = itemId;
         this.purchaseId = purchaseId;
         this.price = price;
         this.itemName = itemName;
+        this.quantity = quantity; 
     }
 
     public int getItemId() {
@@ -61,6 +65,14 @@ public class PItem {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

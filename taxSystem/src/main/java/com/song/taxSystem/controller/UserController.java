@@ -1,5 +1,18 @@
 package com.song.taxSystem.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.song.taxSystem.model.PItem;
 import com.song.taxSystem.model.Purchase;
 import com.song.taxSystem.model.User;
@@ -7,14 +20,6 @@ import com.song.taxSystem.model.UserRequest;
 import com.song.taxSystem.repository.PItemRepository;
 import com.song.taxSystem.repository.PurchaseRepository;
 import com.song.taxSystem.repository.UserRepository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -29,7 +34,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> addUser(@RequestBody User newUser) {
-        System.out.println("Received User: " + newUser);
+        // System.out.println("Received User: " + newUser);
         User savedUser = userRepository.save(newUser);
 
         Map<String, Object> response = new HashMap<>();
@@ -48,15 +53,18 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserRequest loginRequest) {
         String userName = loginRequest.getUserName();
         String passwordHash = loginRequest.getPasswordHash();
-        System.out.println("Received Request: " + userName + " " + passwordHash);
+        // System.out.println("Received Request: " + userName + " " + passwordHash);
 
         User user = userRepository.findByUserNameAndPasswordHash(userName, passwordHash);
-
         Map<String, Object> response = new HashMap<>();
 
         if (user != null) {
             response.put("message", "User exists");
             response.put("userId", user.getId()); 
+            List<Purchase> totalPurchases = purchaseRepository.findByUserId(user.getId());
+            // System.out.println("Purchases: " + totalPurchases);
+            response.put("purchases", totalPurchases);
+            
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "Invalid username or password");

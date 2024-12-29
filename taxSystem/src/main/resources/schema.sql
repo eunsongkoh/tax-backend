@@ -21,6 +21,7 @@ CREATE TABLE PItems (
     ItemId INT IDENTITY PRIMARY KEY,             
     Pid INT NOT NULL,                           
     Price DECIMAL(10, 2) NOT NULL,               
-    ItemName VARCHAR(255) NOT NULL,             
+    ItemName VARCHAR(255) NOT NULL,        
+    Quantity INT NOT NULL,     
     FOREIGN KEY (Pid) REFERENCES Purchases(Pid) ON DELETE CASCADE 
 );

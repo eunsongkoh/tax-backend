@@ -17,14 +17,14 @@ public class Purchase {
     private int userId;
 
     @Column("Total")
-    private int total;
+    private double total;
 
-    private List<PItem> items;
+    // private List<PItem> items;
     
     public Purchase() {
     }
 
-    public Purchase(int purchaseId, int userId, int total) {
+    public Purchase(int purchaseId, int userId, double total) {
         this.purchaseId = purchaseId;
         this.userId = userId;
         this.total = total;
@@ -46,21 +46,21 @@ public class Purchase {
         this.userId = userId;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public void setItems(List<PItem> items) {
-        this.items = items;
-    }
+    // public void setItems(List<PItem> items) {
+    //     this.items = items;
+    // }
 
-    public List<PItem> getItems() {
-        return items;
-    }
+    // public List<PItem> getItems() {
+    //     return items;
+    // }
 
     @Override
     public boolean equals(Object o) {
